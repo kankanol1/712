@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--调用外部 css 样式-->
+    <link rel="stylesheet" href="css/css.css">
+    <!--调用外部 js 样式-->
+    <script src="js/animate.js" type="text/javascript"></script>
+    <script src="js/slider.js" type="text/javascript"></script>
+    <script>
+        window.onload = function(){
+
+
+
+            function $(id){return document.getElementById(id);}//经典函数 传入id
+
+            var js_box = $("js_box");//获取最大盒子
+            var slider_main_block = $("slider_main_block");//获得滚动的盒子
+            var imgs = slider_main_block.children;//获得所有图片 数组
+            var slider_ctrl = $("slider_ctrl");//获得 控制span的父盒子
+
+            for(var i=0;i<imgs.length;i++){
+                var span = document.createElement("span");//创建span
+                span.className = "slider-ctrl-con";//添加类名
+                span.innerHTML = imgs.length - i;//倒叙插入
+                slider_ctrl.insertBefore(span,slider_ctrl.children[1]);在第二个元素前面插入
+            }
+
+
+            //遍历按钮
+            //span 是8个按钮 它们都是span
+            var iNow = 0; //控制播放的张数
+            for(var k in spans){
+                span[k].onclick = function(){
+
+                    if(this.className == "slider-strl-prev"){
+                        //当我们左侧点击的时候 当前图片慢慢走到右边，
+                        // 上一张 一定先快速走到左侧
+                        animate(imgs[iNow],{left:scrollWidth});
+                        --iNow < 0 ? iNow = imgs.length - 1: iNow;
+                        imgs[iNow].style.left = - scrollWidth + "px";
+                        animate(imgs[iNow],{left:0});
+                        setSquare();
+                    }
+                    else if (this.className == "slider-ctrl-next"){
+                        autoplay();
+                    }
+                    else{
+                        var that = this.innerHTML - 1;
+
+                        if(that>iNow){
+                            animate(imgs[iNow],{left: - scrollWidth});
+                            imgs[that].style.left = -scrollWidth + "px";
+                        }else if(that<iNow){
+                            animate(imgs[iNow],{left:scrollWidth});
+                            imgs[that].style.left = scrollWidth + "px";
+                        }
+                        iNow = that;
+                        animate(imgs[iNow],{left:0});
+                        setSquare();
+                    }
+                }
+            }
+            function setSquare(){
+                for(var i=1;i<span.length;i++){
+                    spans[i].className = "slider-ctrl-con";
+
+                }
+                spans[iNow + 1].className = "slider-ctrl-con current";
+            }
+
+            var timer = null;
+            timer = setInterval(autoplay,2000);
+            function autoplay(){
+                animate(img[iNow],{left:-scrollWidth});
+
+                // ++iNow > imgs.length-1 ？iNow = 0 : iNow;
+                iNow++;
+                if(iNow>imgs.length-1){
+                    iNow=0;
+                }
+                // --iNow < 0 ? iNow = imgs.length - 1: iNow;
+                imgs[iNow].style.left = scrollWidth + "px";
+                animate(img[iNow],{left:0});
+                setSquare();
+            }
+
+            js_box.onmouseover = function(){
+                clearInterval(timer);
+
+            };
+            js_box.onmouseout = function(){
+                clearInterval(timer);
+                timer = setInterval(autoplay(),2000);
+            };
+
+        }
+    </script>
+
+</head>
+<body>
+
+<div class="css_box" id="js_box">
+    <div class="slider">
+        <div class="slider-man" id="slider_main_block">
+            <div class="slider-main-img"><a href="#"><img src="img/01.jpg" alt=""></a></div>
+            <div class="slider-main-img"><a href="#"><img src="img/02.jpg" alt=""></a></div>
+            <div class="slider-main-img"><a href="#"><img src="img/03.jpg" alt=""></a></div>
+            <div class="slider-main-img"><a href="#"><img src="img/04.jpg" alt=""></a></div>
+            <div class="slider-main-img"><a href="#"><img src="img/03.jpg" alt=""></a></div>
+            <div class="slider-main-img"><a href="#"><img src="img/02.jpg" alt=""></a></div>
+        </div>
+    </div>
+
+    <!--左右控制的span-->
+    <div class="slider_ctrl" id="slider_ctrl">
+        <span class="slider-ctrl-prev"></span>
+        <span class="slider-ctrl-next"></span>
+    </div>
+</div>
+
+</body>
+</html>

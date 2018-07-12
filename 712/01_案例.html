@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            height: 2000px;
+        }
+        #div{
+            height: 100px;
+            width: 100px;
+            background-color: red;
+            position: absolute;/*设置top left 值 必须定位*/
+        }
+    </style>
+    <script>
+
+
+        /*
+
+        onmousemove   自定义时间间隔事件
+                当鼠标在匹配对象区域的时候
+         */
+        window.onload = function() {
+
+            var oDiv = document.getElementById("div");
+
+            document.onscroll = function() {
+
+                //兼容Chrome
+                //
+                var  scrollHeight = document.documentElement.scrollTop ||  document.body.scrollTop;
+                console.log(scrollHeight);
+            };
+
+            document.onmousemove = function(ev) {
+                //兼容 IE9 以下版本
+                var ev = ev || event;
+                //兼容Chrome
+                var scrollHeight = document.documentElement.scrollTop ||  document.body.scrollTop;
+
+                oDiv.style.left = ev.clientX - oDiv.offsetWidth / 2 + "px";
+                oDiv.style.top = ev.clientY - oDiv.offsetHeight / 2 + scrollHeight + "px";
+            };
+
+            setInterval(function(){
+                document.onmousemove = function(ev) {
+                    //兼容 IE9 以下版本
+                    var ev = ev || event;
+                    //兼容Chrome
+                    var scrollHeight = document.documentElement.scrollTop ||  document.body.scrollTop;
+
+                    oDiv.style.left = ev.clientX - oDiv.offsetWidth / 2 + "px";
+                    oDiv.style.top = ev.clientY - oDiv.offsetHeight / 2 + scrollHeight + "px";
+                };
+            },1000/60)
+        }
+
+
+    </script>
+</head>
+<body>
+
+
+
+
+<div id="div"></div>
+</body>
+</html>

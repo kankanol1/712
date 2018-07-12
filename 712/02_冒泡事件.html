@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            padding: 40px;
+        }
+        #div1 {
+            background-color: #ff99ff;
+        }
+        #div2 {
+            background-color: #ff7e8e;
+        }
+        #div3 {
+            background-color: #4eff30;
+        }
+    </style>
+    <script>
+        window.onload  = function(){
+            /*
+            冒泡事件：当一个元素接受一个事件时候，会将该事件传递给它的父级，
+            直到window.     这种机制被称为冒泡机制
+            只和元素嵌套结构有关  和元素位置无关
+             */
+
+
+            var oDiv1 = document.getElementById("div1");
+            var oDiv2 = document.getElementById("div2");
+            var oDiv3 = document.getElementById("div3");
+
+            function fu1(){
+                alert(this.id);
+            }
+            function fu2(){
+                alert("你好！");
+            }
+
+
+            oDiv1.onclick = fu1;//给 ele 注册点击事件 ===> 给**注册事件处理程序
+
+            //事件函数绑定
+            oDiv1.onclick = fu1;//r如果我接受到了一个点击事件，我就执行fn1
+            //oDiv2.onclick = fu2;
+            oDiv3.onclick = fu1;
+
+            //我在马路边交到一分钱，把它交到警察叔叔手里面.
+            //
+            //     我.on马路边交到一分钱 = function(){
+            //         把它交到警察叔叔手里面.
+            //     }
+        }
+    </script>
+</head>
+<body>
+
+<div id="div1">
+    <div id="div2">
+        <div id="div3"></div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background: #666;
+        }
+        #box {
+            width: 390px;
+            height: 480px;
+            margin: 20px auto 0;
+            position: relative;
+            background: #fff url(img/loader_ico.gif) no-repeat center;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            position: absolute;
+            top: 0;
+            right: -50px;
+        }
+
+        ul li {
+            width: 40px;
+            height: 40px;
+            background: #ccc;
+            margin-bottom: 10px;
+        }
+
+        p,
+        span {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: #000;
+            font: 16px/40px '微软雅黑';
+            text-align: center;
+            color: #fff;
+        }
+
+        span {
+            top: 0;
+        }
+
+        p {
+            bottom: 0;
+            margin: 0;
+        }
+        #box .active {
+            background: #fc3;
+        }
+        img {
+            border: none;
+            width: 390px;
+            height: 480px;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var oBox = document.getElementById('box');
+            var oUl = document.getElementById('list');
+            var aLi = oUl.getElementsByTagName('li');
+            var oP = oBox.getElementsByTagName('p')[0];
+            var oSpan = oBox.getElementsByTagName('span')[0];
+            var oImg = oBox.getElementsByTagName('img')[0];
+
+            var arrUrl = ['img/1.png','img/2.png','img/3.png','img/4.png'];
+            var arrText = ['一只老鹰','一个人物','一个小姐姐','一张面具'];
+            var num = 0;
+
+            // 动态添加li
+            for (var i=0; i<arrUrl.length; i++) {
+                oUl.innerHTML += '<li></li>';
+            }
+            
+            // 初始化
+            oImg.src = arrUrl[num];
+            oSpan.innerHTML = 1+num + ' / ' + arrUrl.length;
+            oP.innerHTML = arrText[num];
+            aLi[num].className = 'active';
+            
+            // 给li添加点击事件
+            for (var i=0; i<aLi.length; i++) {
+                aLi[i].index = i;
+                aLi[i].onclick = function () {
+                    oImg.src = arrUrl[this.index];
+                    oSpan.innerHTML = 1+this.index + ' / ' + arrUrl.length;
+                    oP.innerHTML = arrText[this.index];
+
+                    // 思路一：先清空，在添加
+                    for (var i=0; i<aLi.length; i++) {
+                        aLi[i].className = '';
+                    }
+                    this.className = 'active';
+                };
+            }
+
+        };
+    </script>
+</head>
+
+<body>
+    <div id="box">
+        <img src="">
+        <ul id="list"></ul>
+        <span>图片数量计算中....</span>
+        <p>图片文字加载中...</p>
+    </div>
+</body>
+
+</html>

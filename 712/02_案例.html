@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        #div1{
+            height: 200px;
+            width: 100px;
+            border: 1px solid #f9ff;
+            display: none;
+        }
+    </style>
+    <script>
+
+        window.onload = function(){
+
+            var oBtn = document.getElementById("btn");
+            var oDiv = document.getElementById("div1");
+
+            oBtn.onclick = function(ev){
+                oDiv.style.display = "block";
+                var ev = ev || event;
+                ev.cancelBubble = true;
+
+            };
+            document.onclick = function () {
+                oDiv.style.display = "none";
+            };
+        };
+    </script>
+</head>
+
+<body>
+
+
+<input type="button" id="btn" value="按钮">
+<div id="div1">
+
+
+    <a href="http://iqiyi.com" target="_blank">爱奇艺</a>
+    <a href="http://iqiyi.com" target="_self">爱奇艺</a>
+    <a href="http://iqiyi.com" target="_top">爱奇艺</a>
+    <a href="http://iqiyi.com" target="_parent">爱奇艺</a>
+</div>
+<p>24555555554555</p>
+<p>44444444444444</p>
+<p>55555555555555</p>
+<p>55555555555555</p>
+<p>55555555555555</p>
+<p>55555555555555</p>
+</body>
+</html>

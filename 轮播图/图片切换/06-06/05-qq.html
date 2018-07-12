@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        h2 {
+            margin: 0;
+        }
+        /* -------------------------------------------- */
+        #list {
+            margin: 10px auto;
+            width: 300px;
+            border: 1px solid #000;
+        }
+        #list h2 {
+            border-bottom: 1px solid #000;
+            font: 16px/30px '微软雅黑';
+            background: #fc3 url(img/ico1.gif) no-repeat 5px center;
+            color: #fff;
+            padding-left: 25px;
+        }
+        #list ul {
+            display: none;
+        }
+        #list ul li {
+            padding-left: 25px;
+            border-bottom: 1px solid #000;
+        }
+       #list>last-child li:last-child {
+           border-bottom: none;
+       }
+       #list .active {
+           background-image: url(img/ico2.gif);
+           background-color: pink;
+       }
+    </style>
+    <script>
+        window.onload = function () {
+            var oList = document.getElementById('list');
+            var aH2 = oList.getElementsByTagName('h2');
+            var aUl = oList.getElementsByTagName('ul');
+            var aLi = null;
+
+            for (var i=0; i<aH2.length; i++) {
+                aH2[i].index = i;
+                aH2[i].onclick = function () {
+                    if(this.className == '') {
+                        aUl[this.index].style.display = 'block';
+                        this.className = 'active';
+                    } else {
+                        aUl[this.index].style.display = 'none';
+                        this.className = '';
+                    }
+                };
+            }
+        };
+    </script>
+</head>
+<body>
+    <ul id="list">
+        <li>
+            <h2>我的终端</h2>
+            <ul>
+                <li>张三</li>
+                <li>张三</li>
+                <li>张三</li>
+                <li>张三</li>
+            </ul>
+        </li>
+        <li>
+            <h2>我的好友</h2>
+            <ul>
+                <li>张三</li>
+                <li>张三</li>
+                <li>张三</li>
+                <li>张三</li>
+            </ul>
+        </li>
+        <li>
+            <h2>我的坏友</h2>
+            <ul>
+                <li>张三</li>
+                <li>张三</li>
+                <li>张三</li>
+                <li>张三</li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>

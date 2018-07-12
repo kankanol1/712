@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        window.onload = function () {
+            var aBtn = document.getElementsByTagName('input');
+            for(var i=0; i<aBtn.length; i++) {
+                aBtn[i].index = i;  //索引值 元素在所有的兄弟节点中的编号
+                aBtn[i].onclick = function () {
+                    //alert(i); //3
+                    alert(this.index);
+                };
+            }
+        };
+    </script>
+</head>
+<body>
+    <input type="button" value="按钮1">
+    <input type="button" value="按钮2">
+    <input type="button" value="按钮3">
+    <input type="button" value="按钮4">
+    <input type="button" value="按钮5">
+    <input type="button" value="按钮6">
+</body>
+</html>

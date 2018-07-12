@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>wangyi</title>
+    <style type="text/css">
+        *{margin:0;padding: 0;}
+        .w-slider{
+            width: 310px;
+            height: 265px;
+            margin:100px auto;
+            background-color: pink;
+            position: relative;
+            overflow: hidden;
+        }
+        .slider{
+            width: 310px;
+            height: 220px;
+        }
+        .slider-main{
+            /*width: 620px;*/
+            /*height: 220px;*/
+            width: 800px;
+            height: 600px;
+            background: pink;
+        }
+        .slider-main-img{
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .slider-ctrl{
+            width: 310px;
+            height: 65px;
+            background-color: yellow;
+            text-align: center;
+            padding-top: 5px;
+        }
+        .slider-ctrl-con{
+            width: 24px;
+            height: 20px;
+            display: inline-block;
+            margin: 0 5px;
+            background: url(img/01.png) no-repeat -24px -782px;
+            cursor: pointer;
+            text-indent: -5em;
+            overflow: hidden;
+        }
+        .current {
+            background-position: -24px -762px;
+        }
+        .slider-ctrl-prev,
+        .slider-ctrl-next{
+            width: 30px;
+            height: 35px;
+            position: absolute;
+            top: 50%;
+            margin-top: -20px;
+            opacity: 0.8;
+            cursor: pointer;
+            background: url(img/01.png) no-repeat 6px top;
+        }
+        .slider-ctrl-prev{
+            left: 0;
+        }
+        .slider-ctrl-next{
+            right: 0;
+            background-position: -6px -45px;
+        }
+    </style>
+</head>
+<body>
+<div class="w-slider" id="w_slider">
+    <div class="slider" id="slider">
+        <div class="slider-main" id="slider_main">
+            <div class="slider-main-img"><a href="#"><img src="img/04.jpg" alt=""></a></div>
+            <div class="slider-main-img"><a href="#"><img src="img/04.jpg" alt=""></a></div>
+            <div class="slider-main-img"><a href="#"><img src="ime/04.jpg" alt=""></a></div>
+            <div class="slider-main-img"><a href="#"><img src="img/04.jpg" alt=""></a></div>
+            <div class="slider-main-img"><a href="#"><img src="img/04.jpg" alt=""></a></div>
+            <div class="slider-main-img"><a href="#"><img src="img/04.jpg" alt=""></a></div>
+        </div>
+    </div>
+    <div class="slider-ctrl" id="slider_ctrl">
+        <span class="slider-ctrl-prev"></span>
+        <!-- <span class="slider-ctrl-con current"></span>
+        <span class="slider-ctrl-con"></span>
+        <span class="slider-ctrl-con"></span>
+        <span class="slider-ctrl-con"></span>
+        <span class="slider-ctrl-con"></span>
+        <span class="slider-ctrl-con"></span>
+        <span class="slider-ctrl-con"></span>
+        <span class="slider-ctrl-con"></span> -->
+        <span class="slider-ctrl-next"></span>
+    </div>
+</div>
+<script type="text/javascript">
+    function $(id){
+        return document.getElementById(id);
+    }
+    var w_slider=$("w_slider");//大盒子
+    var slider_main=$("slider_main");//放图片的盒子
+    var imgs=slider_main.children;//图片
+    console.log(imgs.length);
+    var slider_ctrl=$("slider_ctrl");//控制盒子
+    for(var i=0;i<imgs.length;i++){
+        var span=document.createElement("span");
+        span.className="slider-ctrl-con";
+        span.innerHTML=imgs.length-i;
+        slider_ctrl.insertBefore(span,slider_ctrl.children[1]);
+    }
+    var spans=slider_ctrl.children;
+    console.log(spans);
+    // spans[1].className="slider-ctrl-con current";
+    spans[1].setAttribute("class","slider-ctrl-con current");
+
+    var scorllWidth=w_slider.offsetWidth;
+    console.log(scorllWidth);
+    // 获取右边控制按钮
+    var slider_ctrl_next=slider_ctrl.children[imgs.length+1];
+    console.log(slider_ctrl_next);
+    for(var i=1;i<imgs.length;i++){
+        imgs[i].style.left=scorllWidth+"px";
+    }
+    var iNow=0;//表示图片当前索引值
+    for(var k in spans){//k表示点击的索引值
+        spans[k].onclick=function(){
+            if(this.className=="slider-ctrl-prev"){//左边按钮
+                // imgs[iNow].style.left=-scorllWidth+"px";
+                animate(imgs[iNow],{left:scorllWidth});
+                iNow--;
+                if(iNow<0){
+                    iNow=imgs.length-1;
+                }
+                imgs[iNow].style.left=-scorllWidth+"px";
+                animate(imgs[iNow],{left:0});
+                setSquare();
+            }
+            else if(this.className=="slider-ctrl-next"){//右边按钮
+                // alert("你点击了右边边");
+                autoPlay();
+            }else{
+                var that=this.innerHTML-1;//点击的索引值
+                console.log(iNow);//初始值为0 图片的索引值
+                console.log(imgs.length);
+                if(that>iNow){
+                    //right
+                    animate(imgs[iNow],{left:-scorllWidth});
+                    iNow++;
+                    if(iNow>imgs.length-1){
+                        iNow=0;
+                    }
+                    imgs[that].style.left=scorllWidth+"px";
+                    animate(imgs[that],{left:0});
+                }else if(that<iNow){
+                    animate(imgs[iNow],{left:scorllWidth});
+                    iNow--;
+                    if(iNow<0){
+                        iNow=imgs.length-1;
+                    }
+                    imgs[that].style.left=-scorllWidth+"px";//先前显示的图片要移开
+                    animate(imgs[that],{left:0});//当前点击的索引值要进来
+                }
+                iNow=that;
+                setSquare();
+                // animate(imgs[iNow],{left:0});
+            }
+        }
+    }
+    //一个可以控制播放span的函数，当前
+    function setSquare(){
+        //清楚所有，留下需要的一个
+        for(var i=1;i<spans.length-1;i++){
+            spans[i].className="slider-ctrl-con";
+        }
+        spans[iNow+1].className="slider-ctrl-con current";
+    }
+
+    //定时器开始
+    var timer=null;
+    timer=setInterval(autoPlay,1500);
+    function autoPlay(){
+        animate(imgs[iNow],{left:-scorllWidth});
+        iNow++;
+        if(iNow>imgs.length-1){
+            iNow=0;
+        }
+        imgs[iNow].style.left=scorllWidth+"px";
+        animate(imgs[iNow],{left:0});
+        setSquare();
+    }
+    //鼠标经过，清除定时器
+    $("slider").onmouseover=function(){
+        clearInterval(timer);
+    }
+    $("slider").onmouseout=function(){
+        clearInterval(timer);//要执行定时器，先清除定时器
+        timer=setInterval(autoPlay,1500);
+    }
+    function animate(obj,json,fn) {  // 给谁    json
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function() {
+            var flag = true;  // 用来判断是否停止定时器   一定写到遍历的外面
+            for(var attr in json){   // attr  属性     json[attr]  值
+                //开始遍历 json
+                // 计算步长    用 target 位置 减去当前的位置  除以 10
+                // console.log(attr);
+                var current = 0;
+                if(attr == "opacity")
+                {
+                    current = Math.round(parseInt(getStyle(obj,attr)*100)) || 0;
+                    console.log(current);
+                }
+                else
+                {
+                    current = parseInt(getStyle(obj,attr)); // 数值
+                }
+                // console.log(current);
+                // 目标位置就是  属性值
+                var step = ( json[attr] - current) / 10;  // 步长  用目标位置 - 现在的位置 / 10
+                step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                //判断透明度
+                if(attr == "opacity")  // 判断用户有没有输入 opacity
+                {
+                    if("opacity" in obj.style)  // 判断 我们浏览器是否支持opacity
+                    {
+                        // obj.style.opacity
+                        obj.style.opacity = (current + step) /100;
+                    }
+                    else
+                    {  // obj.style.filter = alpha(opacity = 30)
+                        obj.style.filter = "alpha(opacity = "+(current + step)* 10+")";
+
+                    }
+                }
+                else if(attr == "zIndex")
+                {
+                    obj.style.zIndex = json[attr];
+                }
+                else
+                {
+                    obj.style[attr] = current  + step + "px" ;
+                }
+
+                if(current != json[attr])  // 只要其中一个不满足条件 就不应该停止定时器  这句一定遍历里面
+                {
+                    flag =  false;
+                }
+            }
+            if(flag)  // 用于判断定时器的条件
+            {
+                clearInterval(obj.timer);
+                //alert("ok了");
+                if(fn)   // 很简单   当定时器停止了。 动画就结束了  如果有回调，就应该执行回调
+                {
+                    fn(); // 函数名 +  （）  调用函数  执行函数
+                }
+            }
+        },10)
+    }
+    function getStyle(obj,attr) {  //  谁的      那个属性
+        if(obj.currentStyle)  // ie 等
+        {
+            return obj.currentStyle[attr];  // 返回传递过来的某个属性
+        }
+        else
+        {
+            return window.getComputedStyle(obj,null)[attr];  // w3c 浏览器
+        }
+    }
+</script>
+</body>
+</html>

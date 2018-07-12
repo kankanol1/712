@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/cssReset.css">
+    <link rel="stylesheet" href="css/picTab.css">
+    <script>
+        window.onload = function () {
+            // 数组存储图片的url和描述信息
+            var arrPic1 = ["img/img1/belle.jpg","img/img1/city.jpg","img/img1/flower.jpg","img/img1/rouse.jpg","img/img1/smail.jpg"];
+			var arrPic2 = ["img/img2/load.jpg","img/img2/pencil.jpg","img/img2/watch.jpg","img/img2/water.jpg",];
+			var arrTx1 = ["第一组第1张","第一组第2张","第一组第3张","第一组第4张","第一组第5张"];
+			var arrTx2 = ["第二组第1张","第二组第2张","第二组第3张","第二组第4张"];
+            var n = 0;
+            var m = 0;
+            // 左边一组的元素
+            var oLImg1 = document.getElementById('lImg1');
+            var oLImg2 = document.getElementById('lImg2');
+            var oP1 = document.getElementById('p1');
+            var oSpan1 = document.getElementById('span1');
+            var oImg1 = document.getElementById('img1');
+            // 右边一组的元素
+            var oRImg1 = document.getElementById('rImg1');
+            var oRImg2 = document.getElementById('rImg2');
+            var oP2 = document.getElementById('p2');
+            var oSpan2 = document.getElementById('span2');
+            var oImg2 = document.getElementById('img2');
+
+            var oPrev = document.getElementById('prev');
+            var oNext = document.getElementById('next');
+       
+            //左边一组初始化
+            function fnPic1 () { 
+                oImg1.src = arrPic1[n];
+                oP1.innerHTML = arrTx1[n];
+                oSpan1.innerHTML = n+1 + ' / ' + arrPic1.length;
+            }
+            // 右边一组初始化
+            function fnPic2 () {
+                oImg2.src = arrPic2[m];
+                oP2.innerHTML = arrTx2[m];
+                oSpan2.innerHTML = m+1 + ' / ' + arrPic2.length;
+            }
+            fnPic1();
+            fnPic2();
+            // 左边一组左侧点击
+            oLImg1.onclick = function () {
+                n --; //通过 n 的改变来控制数组中取值的变化
+                if ( n == -1) {
+                    n = arrPic1.length - 1;
+                }
+                fnPic1();
+            };
+            oRImg1.onclick = function () {
+                m --;
+                if ( m == -1) {
+                    m = arrPic2.length - 1;
+                }
+                fnPic2();
+            };
+
+            oLImg2.onclick = function () {
+                n ++;
+                if ( n == arrPic1.length) {
+                    n = 0;
+                }
+                fnPic1();
+            };
+
+            oRImg2.onclick = function () {
+                m ++;
+                if ( m == arrPic2.length) {
+                    m = 0;
+                }
+                fnPic2();
+            };
+
+
+            // 整体控制
+            oPrev.onclick = function () {
+                n --;
+                if ( n == -1) {
+                    n = arrPic1.length - 1;
+                }
+                fnPic1();
+
+                m --;
+                if ( m == -1) {
+                    m = arrPic2.length - 1;
+                }
+                fnPic2();
+            };
+
+            oNext.onclick = function () {
+                n ++;
+                if ( n == arrPic1.length) {
+                    n = 0;
+                }
+                fnPic1();
+
+                m ++;
+                if ( m == arrPic2.length) {
+                    m = 0;
+                }
+                fnPic2();
+            };
+
+        };
+    </script>
+</head>
+<body>
+    <div class="box">
+        <div class="btn">
+            <input type="button" value="上一组" id="prev">
+            <input type="button" value="下一组" id="next">
+        </div>
+        <div class="pic">
+            <div class="first">
+                <img src="img/loading.gif" id="img1">
+                <p id="p1">图片描述加载...</p>
+                <span id="span1">图片数量计算...</span>
+                <div id="lImg1"></div>
+                <div id="lImg2"></div>
+            </div>
+            <div class="second">
+                <img src="img/loading.gif" id="img2">
+                <p id="p2">图片描述加载...</p>
+                <span id="span2">图片数量计算...</span>
+                <div id="rImg1"></div>
+                <div id="rImg2"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

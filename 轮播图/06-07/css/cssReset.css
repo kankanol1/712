@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+body,p {
+    margin: 0;
+}
+img {
+    border: none;
+    vertical-align: top;
+}
+input {
+    padding: 0;
+    border: none;
+}
+
+
+/* ------------------ */
+.clearfix::after {
+    content: '.';
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+.clearfix {
+    *zoom: 1;
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+
+
+        window.onload =function(){
+
+            /*
+            事件对象：当一个事件发生的时候，
+            把跟当前对象发生的事件相关的一些信息，
+            临时存储在一个指定的地方  ---event对象
+            飞机 -- 黑匣子
+
+            事件对象必须是事件调用的，一个函数是不是事件调用，
+            在函数声明的时候是无法确定的，调用的时候磁能确定
+
+
+            事件对象：
+                    IE/Chrome：事件对象是一个内置的全局对象
+
+                    FF/在标准下： 通过函数逇第一个参数传递进来
+
+                如果一个函数是通过事件调用的，那么函数的第一个参数就是事件对象
+
+
+
+                //alert(even);//undefined ===> 这里没有事件
+                event is not defined 报错
+
+                document.onclick = function(){
+                    alert(even);//[object MouseEvent] 这里有事件调用
+                }
+
+
+
+
+                clientX  返回鼠标电机的位置到可视区域左侧便捷的距离
+                clientY 返回鼠标电机的位置到可视区域上侧便捷的距离
+
+
+
+
+
+
+
+            */
+            function fn1 (ev){
+                //alert(event);
+                var ev = ev || event;//IE9下不支持
+                //alert(ev);
+                //console.log(ev);
+
+                for(var attr in ev){
+                    console.log(attr + ":" + ev[attr]);
+                }
+                alert(ev.clientX);
+            }
+            //fn1();//因为这里不是事件调用的 直接调用
+
+            document.onclick = fn1;
+
+            var btn=document.getElementById("btn");
+            btn.onclick=function(event){
+                console.log("DOM0 & click");
+                console.log(event.type);    //click
+            }
+            btn.addEventListener("click", function (event) {
+                console.log("DOM2 & click");
+                console.log(event.type);    //click
+            },false);
+        }
+    </script>
+</head>
+<body>
+<input id="btn" type="button" value="click">
+</body>
+</html>
